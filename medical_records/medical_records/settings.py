@@ -34,7 +34,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-LOCAL_APPS = []
+LOCAL_APPS = ['therapist_user', 'core', 'bootstrap5']
 
 DJANGO_APPS = [
     'django.contrib.admin',
@@ -84,8 +84,8 @@ WSGI_APPLICATION = 'medical_records.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'HOST': str(os.getenv('DATABASE_HOST')),
+        'PORT': str(os.getenv('DATABASE_PORT')),
         'USER': str(os.getenv('DATABASE_USER')),
         'PASSWORD': str(os.getenv('DATABASE_PASSWORD')),
         'NAME': str(os.getenv('DATABASE_NAME')),
@@ -133,3 +133,13 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'therapist_user.Therapist'
+
+AUTHENTICATION_BACKENDS = [
+    'core.backends.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
